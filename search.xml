@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>docker构建到使用</title>
+    <url>/2020/07/11/docker%E6%9E%84%E5%BB%BA%E5%88%B0%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h4 id="一、操作环境"><a href="#一、操作环境" class="headerlink" title="一、操作环境"></a>一、操作环境</h4><p>centos7.x系列</p>
+<p>docker17.x系列</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">uname -r 查看linux内核版本</span><br><span class="line">cat &#x2F;etc&#x2F;redhat-release 查看centos版本</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<h4 id="二、安装Docker"><a href="#二、安装Docker" class="headerlink" title="二、安装Docker"></a>二、安装Docker</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl https:&#x2F;&#x2F;releases.rancher.com&#x2F;install-docker&#x2F;17.03.sh | sh</span><br><span class="line">docker version</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="三、docker的操作"><a href="#三、docker的操作" class="headerlink" title="三、docker的操作"></a>三、docker的操作</h4><h5 id="3-1-查看容器和镜像"><a href="#3-1-查看容器和镜像" class="headerlink" title="3.1 查看容器和镜像"></a>3.1 查看容器和镜像</h5><p>执行docker ps或者docker images进行查看容器或者镜像</p>
+<h5 id="3-2-下载一个镜像"><a href="#3-2-下载一个镜像" class="headerlink" title="3.2 下载一个镜像"></a>3.2 下载一个镜像</h5><p>执行docker pull 镜像名 即可下载一个镜像，例如：docker pull redis</p>
+<h5 id="3-3-创建一个tomcat运行环境"><a href="#3-3-创建一个tomcat运行环境" class="headerlink" title="3.3 创建一个tomcat运行环境"></a>3.3 创建一个tomcat运行环境</h5><pre><code>######     3.3.1 上传java和tomcat</code></pre><p>​        分别下载安装包，上传到服务器</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">apache-tomcat-9.0.0.M21.tar.gz</span><br><span class="line">jdk-8u131-linux-x64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<pre><code>######     3.3.2 解压到指定的目录</code></pre><p>​        在Docker宿主机上创建了一个tomcat-docker目录，把解压好的jdk和tomcat放到该目录</p>
+<h6 id="3-3-3-创建用来生成镜像的Dockerfile文件"><a href="#3-3-3-创建用来生成镜像的Dockerfile文件" class="headerlink" title="3.3.3 创建用来生成镜像的Dockerfile文件"></a>3.3.3 创建用来生成镜像的Dockerfile文件</h6><p>​        Vi Dockerfile内容如下，之后保存</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 设置继承的镜像</span><br><span class="line">FROM ubuntu:16.04</span><br><span class="line"># 创建者信息</span><br><span class="line">MAINTAINER wxj &quot;kingstudy@vip.qq.com&quot;</span><br><span class="line"># 设置环境变量，所有操作都是非交互式的</span><br><span class="line">ENV DEBIAN_FRONTEND noninteractive</span><br><span class="line"># 设置tomcat的环境变量</span><br><span class="line">ENV CATALINA_HOME &#x2F;tomcat</span><br><span class="line">ENV JAVA_HOME &#x2F;jdk</span><br><span class="line"># 复制tomcat和jdk文件到镜像中</span><br><span class="line">ADD apache-tomcat-9.0.0.M21 &#x2F;tomcat</span><br><span class="line">ADD jdk1.8.0_131 &#x2F;jdk</span><br><span class="line"># 复制启动脚本至镜像，并赋予脚本可执行权限</span><br><span class="line">ADD run.sh &#x2F;run.sh</span><br><span class="line">RUN chmod +x &#x2F;*.sh</span><br><span class="line">RUN chmod +x &#x2F;tomcat&#x2F;bin&#x2F;*.sh</span><br><span class="line"># 暴露接口8091，这是我的tomcat接口，默认为8080</span><br><span class="line">EXPOSE 8091</span><br><span class="line"># 设置自启动命令</span><br><span class="line">CMD [&quot;&#x2F;run.sh&quot;]</span><br></pre></td></tr></table></figure>
+
+<pre><code>######     3.3.4创建自动启动文件run.sh</code></pre><p>在创建Dockerfile的时候我们可以发现最后的一行设置自启动命令里面指定了/run.sh</p>
+<p>这里的’/’是根目录的意思，和Linux操作系统的’/’目录有所区别，只要Dockerfile和run.sh在同一个目录下这个地方就可以用/来指定，下面我们在tomcat-docker路径下执行touch run.sh创建一个run.sh文件,内容如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line"># 启动tomcat</span><br><span class="line">exec $&#123;CATALINA_HOME&#125;&#x2F;bin&#x2F;catalina.sh run</span><br></pre></td></tr></table></figure>
+
+<p>run.sh的作用是在启动容器的时候启动tomcat服务</p>
+<h6 id="3-3-5-根据Dockerfile生成镜像"><a href="#3-3-5-根据Dockerfile生成镜像" class="headerlink" title="3.3.5 根据Dockerfile生成镜像"></a>3.3.5 根据Dockerfile生成镜像</h6><p>注意：这个命令一定要在tomcat-docker这个目录下执行才可以，因为里面有复制文件的操作用的是相对目录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker build -t tomcat:test1 -f &#x2F;root&#x2F;tomcat-docker&#x2F;Dockerfile .</span><br></pre></td></tr></table></figure>
+
+
+
+<pre><code>######     3.3.6 用生成的tomcat镜像来启动一个容器</code></pre><p>执行如下命令</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">docker run -d -p 50080:8080 tomcat:test1</span><br></pre></td></tr></table></figure>
+
+<p>-p是指定宿主主机和容器的端口映射， 用宿主主机的50080端口映射容器的8080端口</p>
+<pre><code>######     3.3.7 **测试容器是否部署成功**</code></pre><p>容器启动以后，我们就可以通过宿主主机来访问tomcat容器了，由于我们启动容器的时候做了端口映射所以访问的地址为：</p>
+<p><a href="http://192.168.1.51:50080/" target="_blank" rel="noopener">http://192.168.1.51:50080/</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>page</title>
+    <url>/2020/07/11/page/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/07/11/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+</search>
