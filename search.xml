@@ -41,26 +41,47 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2020/07/11/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+    <title>实用小技巧</title>
+    <url>/2020/07/13/%E5%AE%9E%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/</url>
+    <content><![CDATA[<p>wifi密码破解：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">netsh</span><br><span class="line"></span><br><span class="line">wlan show profile</span><br><span class="line"></span><br><span class="line">wlan show profile name&#x3D;sfd00000 key&#x3D;clear</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>变量命名网站：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;unbug.github.io&#x2F;codelf</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>python打包流程：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;blog.csdn.net&#x2F;five3&#x2F;article&#x2F;details&#x2F;89820000</span><br><span class="line">关于setup.py文件配置：https:&#x2F;&#x2F;www.cnblogs.com&#x2F;hellojack&#x2F;p&#x2F;10749885.html</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p>python离线下载包依赖的路径</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">https:&#x2F;&#x2F;pypi.python.org&#x2F;pypi&#x2F;pip</span><br></pre></td></tr></table></figure>
+
 ]]></content>
   </entry>
   <entry>
-    <title>page</title>
-    <url>/2020/07/11/page/</url>
-    <content><![CDATA[]]></content>
+    <title>python相关操作知识</title>
+    <url>/2020/07/13/python%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E7%9F%A5%E8%AF%86/</url>
+    <content><![CDATA[<h3 id="1-依赖生成与安装"><a href="#1-依赖生成与安装" class="headerlink" title="1.依赖生成与安装"></a>1.依赖生成与安装</h3><p>​        requirements.txt会生成使用了pip安装后的依赖包，在正常环境下会生成这个目录下的包/usr/local/lib/pythonx.x/site-packages的包。</p>
+<p>在Python 3时加入了虚拟运行环境，那么进入到虚拟环境会生成虚拟环境目录下的包，比如我在/opt/py3下建立了虚拟环境，对应安装的包会在这里/opt/py3/lib/python3.6/site-packages。</p>
+<ul>
+<li><p>生成：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip freeze &gt; requirements.txt</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h3 id="2-位置参数问题"><a href="#2-位置参数问题" class="headerlink" title="2.位置参数问题"></a>2.位置参数问题</h3><p><a href="https://blog.csdn.net/songlh1234/article/details/83587086" target="_blank" rel="noopener">https://blog.csdn.net/songlh1234/article/details/83587086</a></p>
+<h3 id="3-阿里云函数计算的问题"><a href="#3-阿里云函数计算的问题" class="headerlink" title="3.阿里云函数计算的问题"></a>3.阿里云函数计算的问题</h3><ul>
+<li><p>入口函数的目录问题</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">http:&#x2F;&#x2F;www.meiyingqishi.cn&#x2F;daijinquan&#x2F;1331.html</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+]]></content>
   </entry>
 </search>
