@@ -64,6 +64,8 @@
     <url>/2020/07/13/python%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E7%9F%A5%E8%AF%86/</url>
     <content><![CDATA[<h3 id="1-依赖生成与安装"><a href="#1-依赖生成与安装" class="headerlink" title="1.依赖生成与安装"></a>1.依赖生成与安装</h3><p>​        requirements.txt会生成使用了pip安装后的依赖包，在正常环境下会生成这个目录下的包/usr/local/lib/pythonx.x/site-packages的包。</p>
 <p>在Python 3时加入了虚拟运行环境，那么进入到虚拟环境会生成虚拟环境目录下的包，比如我在/opt/py3下建立了虚拟环境，对应安装的包会在这里/opt/py3/lib/python3.6/site-packages。</p>
+<a id="more"></a>
+
 <ul>
 <li><p>生成：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip freeze &gt; requirements.txt</span><br></pre></td></tr></table></figure>
