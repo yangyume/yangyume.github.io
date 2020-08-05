@@ -22,31 +22,33 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"right","width":300,"display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Do everything to the best">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Yangyu&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="[TOC] 一、技术选型 python3.6.x  tensorflow  nltk(自然语言处理库)  常用机器学习库numpy、collections、pickle、jieba等 代码编辑工具：Sublime Text   二、项目目录结构项目结构 sentiment  data(d)   neg.txt pos.txt  stopwords(d)  baidu_stopwords.txt c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微博情绪分析">
+<meta property="og:url" content="http://yoursite.com/2020/08/05/%E5%BE%AE%E5%8D%9A%E6%83%85%E7%BB%AA%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Yangyu&#39;s blog">
-<meta property="og:description" content="Do everything to the best">
+<meta property="og:description" content="[TOC] 一、技术选型 python3.6.x  tensorflow  nltk(自然语言处理库)  常用机器学习库numpy、collections、pickle、jieba等 代码编辑工具：Sublime Text   二、项目目录结构项目结构 sentiment  data(d)   neg.txt pos.txt  stopwords(d)  baidu_stopwords.txt c">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-08-05T10:51:45.219Z">
+<meta property="article:modified_time" content="2020-08-05T10:24:46.170Z">
 <meta property="article:author" content="Yangyu">
 <meta property="article:tag" content="自信 阳光">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/">
+<link rel="canonical" href="http://yoursite.com/2020/08/05/%E5%BE%AE%E5%8D%9A%E6%83%85%E7%BB%AA%E5%88%86%E6%9E%90/">
 
 
 <script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Yangyu's blog</title>
+  <title>微博情绪分析 | Yangyu's blog</title>
   
 
 
@@ -201,7 +203,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -213,6 +215,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、技术选型"><span class="nav-number">1.</span> <span class="nav-text">一、技术选型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、项目目录结构"><span class="nav-number">2.</span> <span class="nav-text">二、项目目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目结构"><span class="nav-number">2.1.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目结构解释"><span class="nav-number">2.2.</span> <span class="nav-text">项目结构解释</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、相关数据"><span class="nav-number">3.</span> <span class="nav-text">三、相关数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cn-stopwords-txt"><span class="nav-number">3.1.</span> <span class="nav-text">cn_stopwords.txt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pos-txt-以下10条数据是示范数据"><span class="nav-number">3.2.</span> <span class="nav-text">pos.txt  (以下10条数据是示范数据)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#neg-txt-以下10条数据为示范数据"><span class="nav-number">3.3.</span> <span class="nav-text">neg.txt (以下10条数据为示范数据)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、代码"><span class="nav-number">4.</span> <span class="nav-text">四、代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sentiment-model-data-format-py"><span class="nav-number">4.1.</span> <span class="nav-text">sentiment_model_data_format.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sentiment-model-train-non-save-parameter-py"><span class="nav-number">4.2.</span> <span class="nav-text">sentiment_model_train_non_save_parameter.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sentiment-model-train-save-parameter-py"><span class="nav-number">4.3.</span> <span class="nav-text">sentiment_model_train_save_parameter.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sentiment-model-predict-read-parameter-py"><span class="nav-number">4.4.</span> <span class="nav-text">sentiment_model_predict_read_parameter.py</span></a></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -292,9 +295,10 @@
       <div class="main-inner">
         
 
-        <div class="content index posts-expand">
+        <div class="content post posts-expand">
           
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
@@ -310,10 +314,9 @@
       <meta itemprop="name" content="Yangyu's blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/05/%E5%BE%AE%E5%8D%9A%E6%83%85%E7%BB%AA%E5%88%86%E6%9E%90/" class="post-title-link" itemprop="url">微博情绪分析</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          微博情绪分析
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -327,6 +330,13 @@
             </span>
 
           
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
         </div>
       </header>
@@ -337,7 +347,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>[TOC]</p>
+        <p>[TOC]</p>
 <h1 id="一、技术选型"><a href="#一、技术选型" class="headerlink" title="一、技术选型"></a>一、技术选型</h1><ol>
 <li><p>python3.6.x</p>
 </li>
@@ -421,291 +431,96 @@
 <h2 id="sentiment-model-predict-read-parameter-py"><a href="#sentiment-model-predict-read-parameter-py" class="headerlink" title="sentiment_model_predict_read_parameter.py"></a>sentiment_model_predict_read_parameter.py</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> io,sys</span><br><span class="line"> </span><br><span class="line">sys.stdout = io.TextIOWrapper(sys.stdout.detach(),encoding=<span class="string">'utf-8'</span>)</span><br><span class="line">sys.stderr = io.TextIOWrapper(sys.stderr.detach(),encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取格式化后的数据，进行模型训练以及数据测试。并将模型参数保存下来</span></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="comment"># from nltk.tokenize import word_tokenize</span></span><br><span class="line"><span class="comment"># from nltk.stem import WordNetLemmatizer</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">train_x,train_y,test_x,test_y = pickle.load(open(<span class="string">"sentiment_set.pickle"</span>,<span class="string">"rb"</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># from create_sentiment_features import create_features_sets_and_labels</span></span><br><span class="line"><span class="comment"># train_x,train_y,test_x,test_y = create_features_sets_and_labels('pos.txt','neg.txt')</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># lemmatizer = WordNetLemmatizer()</span></span><br><span class="line"></span><br><span class="line">n_nodes_hl1 = <span class="number">500</span></span><br><span class="line">n_nodes_hl2 = <span class="number">500</span></span><br><span class="line">n_nodes_hl3 = <span class="number">500</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">n_classes = <span class="number">2</span></span><br><span class="line">batch_size = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">x = tf.placeholder(<span class="string">'float'</span> , [<span class="literal">None</span>,len(train_x[<span class="number">0</span>])])</span><br><span class="line">y = tf.placeholder(<span class="string">'float'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 改变1:将权重和偏差初始化定义在函数外，目的是实现数据的保存</span></span><br><span class="line">hidden_1_layer = &#123;<span class="string">'weights'</span>:tf.Variable(tf.random_normal([len(train_x[<span class="number">0</span>]), n_nodes_hl1])),<span class="string">'biases'</span>:tf.Variable(tf.random_normal([n_nodes_hl1]))&#125;</span><br><span class="line">hidden_2_layer = &#123;<span class="string">'weights'</span>:tf.Variable(tf.random_normal([n_nodes_hl1, n_nodes_hl2])),<span class="string">'biases'</span>:tf.Variable(tf.random_normal([n_nodes_hl2]))&#125;</span><br><span class="line">hidden_3_layer = &#123;<span class="string">'weights'</span>:tf.Variable(tf.random_normal([n_nodes_hl2, n_nodes_hl3])),<span class="string">'biases'</span>:tf.Variable(tf.random_normal([n_nodes_hl3]))&#125;</span><br><span class="line">output_layer = &#123;<span class="string">'weights'</span>:tf.Variable(tf.random_normal([n_nodes_hl3, n_classes])),<span class="string">'biases'</span>:tf.Variable(tf.random_normal([n_classes]))&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">neural_network_mode</span><span class="params">(data)</span>:</span></span><br><span class="line">   </span><br><span class="line">    l1 = tf.matmul(data,hidden_1_layer[<span class="string">'weights'</span>]) + hidden_1_layer[<span class="string">'biases'</span>]</span><br><span class="line">    l1 = tf.nn.relu(l1)</span><br><span class="line"></span><br><span class="line">    l2 = tf.matmul(l1,hidden_2_layer[<span class="string">'weights'</span>]) + hidden_2_layer[<span class="string">'biases'</span>]</span><br><span class="line">    l2 = tf.nn.relu(l2)</span><br><span class="line"></span><br><span class="line">    l3 = tf.matmul(l2,hidden_3_layer[<span class="string">'weights'</span>]) + hidden_3_layer[<span class="string">'biases'</span>]</span><br><span class="line">    l3 = tf.nn.relu(l3)</span><br><span class="line"></span><br><span class="line">    output = tf.matmul(l3,output_layer[<span class="string">'weights'</span>]) + output_layer[<span class="string">'biases'</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> output</span><br><span class="line"></span><br><span class="line"><span class="comment"># 同样，定义saver函数，方便后面通过saver函数restore模型参数</span></span><br><span class="line">saver = tf.train.Saver()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 主要步骤：1 恢复训练模型参数，2 编码输入数据，3 计算编码后的输入数据结果，4 判断情绪分类</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">use_neural_network</span><span class="params">(input_data)</span>:</span></span><br><span class="line">    prediction = neural_network_mode(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 1.1 恢复词典数据</span></span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'lexicon.pickle'</span>,<span class="string">'rb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        lexicon = pickle.load(f)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">        sess.run(tf.global_variables_initializer())</span><br><span class="line">        <span class="comment"># 1.2 恢复训练模型</span></span><br><span class="line">        saver.restore(sess,<span class="string">"model.ckpt"</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 2 编码输入数据</span></span><br><span class="line">        <span class="comment"># current_words = word_tokenize(input_data.lower())</span></span><br><span class="line">        <span class="comment"># current_words = [lemmatizer.lemmatize(i) for i in current_words]</span></span><br><span class="line">        features = np.zeros(len(lexicon))</span><br><span class="line"></span><br><span class="line">        all_words = jieba.cut(input_data)</span><br><span class="line">        a = <span class="string">" "</span>.join(all_words)</span><br><span class="line">        a.split(<span class="string">" "</span>)</span><br><span class="line">        current_words = a.split(<span class="string">" "</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> current_words:</span><br><span class="line">            <span class="comment"># if word.lower() in lexicon:</span></span><br><span class="line">            <span class="comment">#     index_value = lexicon.index(word.lower())</span></span><br><span class="line">            <span class="comment">#     features[index_value] += 1</span></span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">in</span> lexicon:</span><br><span class="line">                index_value = lexicon.index(word)</span><br><span class="line">                features[index_value] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        features = np.array(list(features))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 3 计算编码后的输入数据结果</span></span><br><span class="line">        result = (sess.run(tf.argmax(prediction.eval(feed_dict=&#123;x:[features]&#125;),<span class="number">1</span>)))</span><br><span class="line">        print(<span class="string">'\n'</span>)</span><br><span class="line">        print(prediction.eval(feed_dict=&#123;x:[features]&#125;))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 4 判断情绪分类</span></span><br><span class="line">        <span class="keyword">if</span> result[<span class="number">0</span>] == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">'Positive:'</span>,input_data)</span><br><span class="line">        <span class="keyword">elif</span> result[<span class="number">0</span>] == <span class="number">1</span>:</span><br><span class="line">            print(<span class="string">'Negative:'</span>,input_data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用user_neural_network()函数判断</span></span><br><span class="line"><span class="comment"># use_neural_network('what a beautiful day!')</span></span><br><span class="line"><span class="comment"># use_neural_network('what a bad day!')</span></span><br><span class="line"><span class="comment"># use_neural_network('the class is so boring!')</span></span><br><span class="line"><span class="comment"># use_neural_network('I like the class, becuase I learnt a lot!')</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># pos</span></span><br><span class="line"><span class="comment"># use_neural_network('本人是一名大一学生，大一的生活一直处于浑浑噩噩的状态，直到我看到了这本书。它对于我的意义远远大于一本书。《杜拉拉升职记》让我开始重新审视自己的生活，开始规划自己的未来，在今后，我希望我能向拉拉一样所向无敌。人际关系的交际技巧，与上司下属的巧妙沟通，善于利用学习机会，每一次的金玉良言，我想说，杜拉拉不仅仅给在职的白领以启迪，她势必将改变我的生活。真的谢谢作者。')</span></span><br><span class="line">use_neural_network(<span class="string">'忍不住再说几句，这本书大多内容是参考其他书籍的，例如P37，内容是参考《金属切削机床》的，参考就参考吧，无可厚非，让我郁闷的试图3－74的 b)，其中标注a b，根本不知道这是干吗的，文中也没有说明。类似的事情，本书太多。我怀疑（是怀疑，没有啥证据）这本书是编辑把握总体框架，教师给素材，研究生做整理。事后没几个人做总体阅读。若没有猜错，第三版也很可能存在这些问题。拭目以待。'</span>)</span><br><span class="line">use_neural_network(<span class="string">'以前在《女人我最大》节目中最爱看KEVIN老师参予的节目，每次看他对彩妆的讲解，自己总有收获。而且听他对彩妆的介绍，总是浅显易懂，而他给人的感觉是那么热心地要把自己所知道的护肤和彩妆的知识毫不吝啬地教给大家。昨天一拿到书我就迫不及待地开始了新一轮的学习，呵呵又收获了一些护肤的小知识。而且我非常喜欢整本书的编排，当然要是KEVIN老师再出一个DVD特辑跟书一起卖就更好了。'</span>)</span><br><span class="line">use_neural_network(<span class="string">'我说道，“爸爸，你走吧。”他望车外看了看，说，“我买几个橘子去。你就在此地，不要走动。”我看那边月台的栅栏外有几个卖东西的等着顾客。走到那边月台，须穿过铁道，须跳下去又爬上去。父亲是一个胖子，走过去自然要费事些。我本来要去的，他不肯，只好让他去。我看见他戴着黑布小帽，穿着黑布大马褂，深青布棉袍，蹒跚地走到铁道边，慢慢探身下去，尚不大难。可是他穿过铁道，要爬上那边月台，就不容易了。他用两手攀着上面，两脚再向上缩；他肥胖的身子向左微倾，显出努力的样子。这时我看见他的背影，我的泪很快地流下来了。我赶紧拭干了泪，怕他看见，也怕别人看见。我再向外看时，他已抱了朱红的橘子望回走了。过铁道时，他先将橘子散放在地上，自己慢慢爬下，再抱起橘子走。到这边时，我赶紧去搀他。他和我走到车上，将橘子一股脑儿放在我的皮大衣上。于是扑扑衣上的泥土，心里很轻松似的，过一会说，“我走了；到那边来信！”我望着他走出去。他走了几步，回过头看见我，说，“进去吧，里边没人。”等他的背影混入来来往往的人里，再找不着了，我便进来坐下，我的眼泪又来了。'</span>)</span><br><span class="line">use_neural_network(<span class="string">'深蓝的天空中挂着一轮金黄的圆月，下面是海边的沙地，都种着一望无际的碧绿的西瓜。其间有一个十一二岁的少年，项带银圈，手捏一柄钢叉，向一匹猹②用力地刺去。那猹却将身一扭，反从他的胯下逃走了。'</span>)</span><br><span class="line">use_neural_network(<span class="string">'在世上，我们每一个人都像一朵花，有的人花朵凋谢以后，会结出丰硕的果实，名利俱收，收获颇丰。有的人只会开花不会结果，一辈子没有做出什么惊天动地的大事，只是平平淡淡的走完一生。大多数人都是在过着平淡的生活。即使如此，我们也要努力绽放，盛开出最美的姿态，散发醉人的芳香，芬芳自己，芬芳他人，芬芳世界。'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># neg</span></span><br><span class="line">use_neural_network(<span class="string">'这次在当当一共购了10本书,其中我的《父母是孩子最好的医生》与《老年人不生病的智慧》还有两本《求医不如求己》书本的切面切口不整齐,起毛的.书本里边很多字又印得不清晰!!本想着这些书挺有阅读价值的,就买正品来收藏,可是,没想到当当居然卖伪货,比淘宝的高伪品质量还更要差,而且价钱却是人家的两三倍.上次别的同事在淘宝买的也是《不生病的智慧》,也没有发生上以上说的质量问题!虽说是免邮,成本高了,可是也不能进伪质的货来卖,然后把利润增加的呀!真是让人生气!奉劝各位消费者在买之前要考虑清楚啊!'</span>)</span><br><span class="line">use_neural_network(<span class="string">'毕淑敏，顶顶有名的作家，顶顶有名的心理师，之前看过一两篇散文觉得这个作者挺细腻，对心理的描写很适合敏感的我。掂量过后觉得买《女心理师》这部小说看看，没瘾！内容简介道尽了故事主线，本事一个很好的题材，却想不到内容的繁琐把书带坏。应该说不是每本书对每个人都会有深远的影响，对我们一生其深远影响的书没几本，而在寻找这基本书的过程中对一个爱收藏本本的人来说无疑有考验你钱袋的无奈。有名的作者都有一两本或以上的成名作，但除了令之名声大噪的书外，其余的不一定都是经典，因为没有定律说名人出的就一定是~明~书。'</span>)</span><br><span class="line">use_neural_network(<span class="string">'我家小宝同学特别喜爱卡梅拉系列故事,每天晚上睡觉前非讲不可,那些可爱的故事会陪着他进入梦乡......我自已也很喜欢不一样的卡梅拉,因为里面的图画很有趣,会说话的图片,我认为是这样的,现在儿子已经会自已讲(我想去看大海)了,希望过一段时间,我就可以当一名聆听者了.卡梅拉 皮迪克 卡梅利多 卡门 贝里奥 科尔贝 小六子 小刺头 小胖驐,真的是太有趣了,有机会一定要推荐给所有的小朋友看看'</span>)</span><br><span class="line">use_neural_network(<span class="string">'我是您天津百龙的老员工，自从您宣布我们失业的那天起，我一直都不敢接受这个事实，因为我实在无法相信这是真的。这几天在儿子家看了你正在炒作的《公平定律》，如果不是亲身在你公司干过，读了这本书我还真会象那些不明真相的人被您忽悠一把，觉得您是个有能力去承担社会责任的人。可是我在您的企业干了将近八年，不得不认同这样的事实——您所做的跟你对外所说的太不同了！！当初也是因为被您的“光辉形象”所吸引来到这个企业，在您的企业认真、勤恳地工作，可是您在干什么？您一直在作秀、炒作，天津百龙的总经理从你的侄女陈总、到张总到宋总到苗总1到苗总2到张总2，短短的几年象走马灯似地换了这么多人，而且每个总经理走的时候都是互相厮杀，搞得天津百龙千疮百孔，我们的销售人员竟然拿着百龙的工资去给金鹏公司（塑钢型才市场的竞争对手）推销产品，孙老板，您是一个“企业家”呀，您任命的总经理手下任用的都是什么人呀！您又在干什么呢！您不是对媒体宣称自己是”无业游民“吗！您不要再自欺欺人了！你实在支撑不下这个烂摊子，所以决定把它卖给了别人，可是没想到被您忽悠着要买天津百龙的人签了合同又不想接手了，这位买家比我们这些百龙的老员工都明白得早，可是我们呢！被您一夜之间宣布辞退，连个过渡期都没有给，您不仅让我们成了真正的无业游民，短期内无法找到工作，您的做法深深地伤了我们的感情，多年来对您的信任，对百龙公司的憧憬，全部灰飞湮灭！......我尤其看到《公平定律》书中写您和您二哥的那段，看了光盘，觉得您二哥这人给人的印象不是个恶人，可是为什么你们兄第之间却到了互相要对方性命的地步，显然您是强势的一方，您更应该反思！！从书中所写和与您接触的了解来看，您并未深入地认识到你们之间恩怨的真正原因！因为您，导致现在我们这样的处境.......也让我们更理解了你的二哥！从网上看到您这次为这本书狂投1500万元，那为何你又这样不顾一切地卖天津百龙呢！您为什么不能给我们一个公平的安置呢！哎，不过又是一次炒作！孙老板，我们被你可是忽悠惨了！'</span>)</span><br></pre></td></tr></table></figure>
 
 <!---->
-      
     </div>
 
     
     
     
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/01/%E9%98%BF%E9%87%8C%E4%BA%91%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Yangyu">
-      <meta itemprop="description" content="Do everything to the best">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yangyu's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/01/%E9%98%BF%E9%87%8C%E4%BA%91%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" class="post-title-link" itemprop="url">阿里云技术文档</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-08-01 11:39:44" itemprop="dateCreated datePublished" datetime="2020-08-01T11:39:44+08:00">2020-08-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-27 13:33:29" itemprop="dateModified" datetime="2020-03-27T13:33:29+08:00">2020-03-27</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="1-表格存储"><a href="#1-表格存储" class="headerlink" title="1.表格存储"></a>1.表格存储</h4><p>官方文档：<a href="https://help.aliyun.com/product/27278.html?spm=a2c4g.11186623.6.540.3e5a419fW9EP5a" target="_blank" rel="noopener">https://help.aliyun.com/product/27278.html?spm=a2c4g.11186623.6.540.3e5a419fW9EP5a</a></p>
-<h4 id="2-函数计算"><a href="#2-函数计算" class="headerlink" title="2.函数计算"></a>2.函数计算</h4><p>官方文档：<a href="https://help.aliyun.com/product/50980.html?spm=a2c4g.11186623.6.540.65af5c22NGkxRG" target="_blank" rel="noopener">https://help.aliyun.com/product/50980.html?spm=a2c4g.11186623.6.540.65af5c22NGkxRG</a></p>
-<h4 id="3-DataWorks"><a href="#3-DataWorks" class="headerlink" title="3.DataWorks"></a>3.DataWorks</h4><p><a href="https://help.aliyun.com/product/72772.html?spm=a2c4g.750001.list.207.5dd87b13bUeoSI" target="_blank" rel="noopener">https://help.aliyun.com/product/72772.html?spm=a2c4g.750001.list.207.5dd87b13bUeoSI</a></p>
-<h4 id="3-阿里云文档技术URL"><a href="#3-阿里云文档技术URL" class="headerlink" title="3.阿里云文档技术URL"></a>3.阿里云文档技术URL</h4><p><a href="https://www.alibabacloud.com/help/zh?spm=a2c63.p38356.879954.1.34944d68vTD1UU" target="_blank" rel="noopener">https://www.alibabacloud.com/help/zh?spm=a2c63.p38356.879954.1.34944d68vTD1UU</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/13/python%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E7%9F%A5%E8%AF%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Yangyu">
-      <meta itemprop="description" content="Do everything to the best">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yangyu's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/13/python%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">python相关操作知识</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-07-13 10:10:48 / Modified: 10:15:58" itemprop="dateCreated datePublished" datetime="2020-07-13T10:10:48+08:00">2020-07-13</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="1-依赖生成与安装"><a href="#1-依赖生成与安装" class="headerlink" title="1.依赖生成与安装"></a>1.依赖生成与安装</h3><p>​        requirements.txt会生成使用了pip安装后的依赖包，在正常环境下会生成这个目录下的包/usr/local/lib/pythonx.x/site-packages的包。</p>
-<p>在Python 3时加入了虚拟运行环境，那么进入到虚拟环境会生成虚拟环境目录下的包，比如我在/opt/py3下建立了虚拟环境，对应安装的包会在这里/opt/py3/lib/python3.6/site-packages。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/07/13/python%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E7%9F%A5%E8%AF%86/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Yangyu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://yoursite.com/2020/08/05/%E5%BE%AE%E5%8D%9A%E6%83%85%E7%BB%AA%E5%88%86%E6%9E%90/" title="微博情绪分析">http://yoursite.com/2020/08/05/微博情绪分析/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/13/%E5%AE%9E%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/">
+        
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Yangyu">
-      <meta itemprop="description" content="Do everything to the best">
-    </span>
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yangyu's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/13/%E5%AE%9E%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/" class="post-title-link" itemprop="url">实用小技巧</a>
-        </h2>
+    <div class="social-list">
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-07-13 10:09:29 / Modified: 10:09:41" itemprop="dateCreated datePublished" datetime="2020-07-13T10:09:29+08:00">2020-07-13</time>
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/username">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
             </span>
 
-          
-
+            <span class="label">Twitter</span>
+          </a>
         </div>
-      </header>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>wifi密码破解：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">netsh</span><br><span class="line"></span><br><span class="line">wlan show profile</span><br><span class="line"></span><br><span class="line">wlan show profile name&#x3D;sfd00000 key&#x3D;clear</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/07/13/%E5%AE%9E%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/11/docker%E6%9E%84%E5%BB%BA%E5%88%B0%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Yangyu">
-      <meta itemprop="description" content="Do everything to the best">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yangyu's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/11/docker%E6%9E%84%E5%BB%BA%E5%88%B0%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">docker构建到使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-07-11 15:12:34 / Modified: 18:17:49" itemprop="dateCreated datePublished" datetime="2020-07-11T15:12:34+08:00">2020-07-11</time>
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/channel_name">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
             </span>
 
-          
-
+            <span class="label">Telegram</span>
+          </a>
         </div>
-      </header>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
 
-      
-          <h4 id="一、操作环境"><a href="#一、操作环境" class="headerlink" title="一、操作环境"></a>一、操作环境</h4><p>centos7.x系列</p>
-<p>docker17.x系列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uname -r 查看linux内核版本</span><br><span class="line">cat &#x2F;etc&#x2F;redhat-release 查看centos版本</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/07/11/docker%E6%9E%84%E5%BB%BA%E5%88%B0%E4%BD%BF%E7%94%A8/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
     </div>
+  </div>
 
-    
-    
-    
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/01/%E9%98%BF%E9%87%8C%E4%BA%91%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" rel="prev" title="阿里云技术文档">
+      <i class="fa fa-chevron-left"></i> 阿里云技术文档
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
